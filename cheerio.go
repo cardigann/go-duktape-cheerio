@@ -16,19 +16,9 @@ func init() {
 func Define(c *duktape.Context) {
 	c.PushTimers()
 
-	js := `
-		var process = process || {version: "v0.1"};
-
-		Duktape.errCreate = function (e) {
-			print(e.stack);
-			return e;
-		}
-	`
-
-	must(c.PevalString(js))
+	must(c.PevalString(`var process = process || {version: "v0.1"};`))
 	must(c.PevalString(bundle))
-
-	c.Pop()
+	c.Pop2()
 }
 
 func must(err error) {
